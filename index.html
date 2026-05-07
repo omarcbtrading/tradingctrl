@@ -4,10 +4,10 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TradingCTRL</title>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.10/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -82,7 +82,19 @@
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
+  <script>
+    window.onerror = function(msg, src, line, col, err) {
+      var el = document.getElementById('root');
+      if(el) el.innerHTML =
+        '<div style="padding:30px;font-family:monospace;background:#fff;margin:40px;border-radius:8px;border:2px solid #fca5a5">' +
+        '<div style="color:#dc2626;font-weight:700;font-size:14px;margin-bottom:10px">&#9888; Error al cargar la aplicación</div>' +
+        '<div style="color:#374151;font-size:12px">' + msg + '</div>' +
+        '<div style="color:#9ca3af;font-size:11px;margin-top:6px">Linea: ' + line + '</div>' +
+        '</div>';
+      return false;
+    };
+  </script>
+<script type="text/babel" data-presets="react,env">
 const { useState, useEffect, useRef, useCallback } = React;
 
 // ─── Constants ────────────────────────────────────────────────────────────────
