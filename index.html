@@ -277,11 +277,7 @@ function TradingApp({db, workspace, onReset}) {
     const unsub = dbRef.on("value", snap=>{
       const val = snap.val();
       let data = val ? Object.values(val) : [];
-      // Restaurar adjuntos desde localStorage
-      try {
-        const localFiles = JSON.parse(localStorage.getItem("tradingctrl_files")||"{}");
-        data = data.map(r=>({ ...r, files: localFiles[r.id] || r.files || [] }));
-      } catch {}
+      data.sort((a,b)=>new Date(b.date)-new Date(a.date));
       setRows(data);
       // Save to localStorage as backup
       try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(data)); } catch {}
@@ -294,21 +290,20 @@ function TradingApp({db, workspace, onReset}) {
     return ()=>dbRef.off("value", unsub);
   },[]);
 
-  // ── Save to Firebase (sin adjuntos — se guardan solo en local) ───────────
-  const saveRows = useCallback(newRows=>{
+  // ── Guardar/borrar entradas INDIVIDUALES (evita "Write too large") ────────
+  const saveEntry = useCallback((entry)=>{
     setSyncStatus("syncing");
-    // Guardar adjuntos en localStorage por ID
-    const localFiles = {};
-    newRows.forEach(r=>{
-      if(r.files && r.files.length>0) localFiles[r.id] = r.files;
-    });
-    try { localStorage.setItem("tradingctrl_files", JSON.stringify(localFiles)); } catch {}
-    // Guardar en localStorage como backup
-    try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(newRows)); } catch {}
-    // Guardar en Firebase SIN los archivos (evita "Write too large")
-    const obj = {};
-    newRows.forEach(r=>{ obj[r.id] = {...r, files:[]}; });
-    dbRef.set(obj).then(()=>setSyncStatus("ok")).catch(()=>setSyncStatus("error"));
+    try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(rows)); } catch {}
+    dbRef.child(entry.id).set(entry)
+      .then(()=>setSyncStatus("ok"))
+      .catch(e=>{console.error("Save error:",e);setSyncStatus("error");});
+  },[rows]);
+
+  const deleteEntry = useCallback((id)=>{
+    setSyncStatus("syncing");
+    dbRef.child(id).remove()
+      .then(()=>setSyncStatus("ok"))
+      .catch(e=>{console.error("Delete error:",e);setSyncStatus("error");});
   },[]);
 
   const EMPTY = {
@@ -386,16 +381,16 @@ function TradingApp({db, workspace, onReset}) {
       deductEnabled:form.deductEnabled,
       feeIntermediary:form.deductEnabled?parseFloat(form.feeIntermediary)||0:null,
       feeTransfer:form.deductEnabled?parseFloat(form.feeTransfer)||0:null,
-      files:form.files,
+      files:form.files||[],
     };
     const newRows=form.id?rows.map(r=>r.id===form.id?row:r):[row,...rows];
-    setRows(newRows); saveRows(newRows); setForm(null);
+    setRows(newRows); saveEntry(row); setForm(null);
   };
 
   const del=id=>{
     if(!window.confirm("¿Eliminar este registro?")) return;
     const newRows=rows.filter(r=>r.id!==id);
-    setRows(newRows); saveRows(newRows);
+    setRows(newRows); deleteEntry(id);
   };
 
   const openEdit=r=>setForm(recalc({
@@ -407,6 +402,26 @@ function TradingApp({db, workspace, onReset}) {
     rate:r.rate?.toString()||"", amount:r.amount?.toString()||"",
   }));
 
+  // Comprime imágenes a máx 1280px y JPEG 0.7 para que quepan en Firebase
+  const compressImage = (dataUrl, mime) => new Promise((resolve)=>{
+    if(!mime.startsWith("image/")){ resolve(dataUrl); return; }
+    const img = new Image();
+    img.onload = ()=>{
+      const MAX = 1280;
+      let {width, height} = img;
+      if(width>MAX || height>MAX){
+        if(width>height){ height=Math.round(height*MAX/width); width=MAX; }
+        else { width=Math.round(width*MAX/height); height=MAX; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width=width; canvas.height=height;
+      canvas.getContext("2d").drawImage(img,0,0,width,height);
+      resolve(canvas.toDataURL("image/jpeg",0.7));
+    };
+    img.onerror = ()=>resolve(dataUrl);
+    img.src = dataUrl;
+  });
+
   // Paste from clipboard
   useEffect(()=>{
     if(!form) return;
@@ -417,7 +432,10 @@ function TradingApp({db, workspace, onReset}) {
         const file=item.getAsFile(); if(!file) return;
         const ts=new Date().toISOString().replace(/[:.]/g,"-");
         const r=new FileReader();
-        r.onload=ev=>setForm(f=>({...f,files:[...f.files,{name:`captura-${ts}.png`,type:file.type,data:ev.target.result}]}));
+        r.onload=async ev=>{
+          const compressed=await compressImage(ev.target.result, file.type);
+          setForm(f=>({...f,files:[...f.files,{name:`captura-${ts}.jpg`,type:"image/jpeg",data:compressed}]}));
+        };
         r.readAsDataURL(file);
       });
     };
@@ -427,9 +445,12 @@ function TradingApp({db, workspace, onReset}) {
 
   const handleFiles=e=>{
     Array.from(e.target.files).forEach(file=>{
-      if(file.size>5*1024*1024){alert("Máx. 5 MB");return;}
+      if(file.size>10*1024*1024){alert("Máx. 10 MB");return;}
       const r=new FileReader();
-      r.onload=ev=>setForm(f=>({...f,files:[...f.files,{name:file.name,type:file.type,data:ev.target.result}]}));
+      r.onload=async ev=>{
+        const compressed=await compressImage(ev.target.result, file.type);
+        setForm(f=>({...f,files:[...f.files,{name:file.name,type:file.type.startsWith("image/")?"image/jpeg":file.type,data:compressed}]}));
+      };
       r.readAsDataURL(file);
     }); e.target.value="";
   };
