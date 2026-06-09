@@ -26,16 +26,12 @@
     .btn{background:#0284c7;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;text-transform:uppercase;}
     .btn:hover{background:#0369a1;box-shadow:0 2px 10px rgba(2,132,199,.25);}
     .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
-    .btn-green{background:#15803d;}.btn-green:hover{background:#166534;box-shadow:0 2px 10px rgba(21,128,61,.25);}
     .ghost{background:#fff;color:#4b5563;border:1.5px solid #d1d9e6;padding:7px 13px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;letter-spacing:.5px;font-weight:500;}
     .ghost:hover{color:#111827;border-color:#9ca3af;background:#f8fafc;}
     .card{background:#fff;border:1.5px solid #d1d9e6;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
     .inp{background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:6px;padding:10px 13px;color:#111827;font-family:'IBM Plex Mono',monospace;font-size:12px;width:100%;outline:none;transition:border-color .15s;}
     .inp:focus{border-color:#0284c7;background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.1);}
     .inp::placeholder{color:#aab4c4;}
-    .inp.computed{border-color:#0284c7;color:#0284c7;background:#e8f4fc;cursor:default;font-weight:600;}
-    .inp-ta{background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:6px;padding:10px 13px;color:#111827;font-family:'IBM Plex Mono',monospace;font-size:11px;width:100%;outline:none;resize:vertical;min-height:90px;transition:border-color .15s;}
-    .inp-ta:focus{border-color:#0284c7;background:#fff;box-shadow:0 0 0 3px rgba(2,132,199,.1);}
     .sel{background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:6px;padding:10px 13px;color:#111827;font-family:'IBM Plex Mono',monospace;font-size:12px;width:100%;outline:none;cursor:pointer;}
     .sel:focus{border-color:#0284c7;}
     .lbl{font-size:10px;color:#374151;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block;font-weight:600;}
@@ -48,7 +44,6 @@
     .badge-in{background:#dcfce7;color:#15803d;border:1.5px solid #86efac;padding:2px 9px;border-radius:4px;font-size:9px;letter-spacing:1px;white-space:nowrap;font-weight:600;}
     .badge-out{background:#fee2e2;color:#dc2626;border:1.5px solid #fca5a5;padding:2px 9px;border-radius:4px;font-size:9px;letter-spacing:1px;white-space:nowrap;font-weight:600;}
     .badge-firm{background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;padding:2px 9px;border-radius:4px;font-size:9px;white-space:nowrap;font-weight:500;}
-    .badge-usd{background:#fefce8;color:#a16207;border:1.5px solid #fde68a;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;}
     .badge-split{background:#f0f9ff;color:#0284c7;border:1.5px solid #bae6fd;padding:1px 6px;border-radius:3px;font-size:8px;font-weight:600;margin-left:5px;}
     .trow:hover td{background:#f8fafc;}
     .ov{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
@@ -64,36 +59,21 @@
     .split-box{background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:8px;padding:14px;margin-bottom:14px;}
     .deduct-box{background:#fafbfc;border:1.5px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:14px;}
     .summary-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:14px;margin-bottom:4px;}
-    /* Setup screen */
-    .setup-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#eef1f6;}
-    .setup-card{background:#fff;border:1.5px solid #d1d9e6;border-radius:16px;padding:40px;max-width:640px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.08);}
-    .step-num{width:28px;height:28px;border-radius:50%;background:#0284c7;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .step-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
-    .step-text{font-size:12px;color:#374151;line-height:1.8;}
-    .step-text strong{color:#111827;}
-    .step-text code{background:#f0f4f8;border:1px solid #d1d9e6;border-radius:3px;padding:1px 5px;font-size:11px;color:#0284c7;}
-    .sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;}
-    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-    .syncing{animation:pulse 1.2s infinite;}
-    /* Img paste preview */
     .thumb{width:40px;height:40px;object-fit:cover;border-radius:4px;border:1.5px solid #d1d9e6;}
+    .sync-dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
   </style>
 </head>
 <body>
 <div id="root"></div>
   <script>
-    window.onerror = function(msg, src, line, col, err) {
-      // Ignorar errores genéricos cross-origin de los CDN (no son fatales)
+    window.onerror = function(msg, src, line) {
       if(!msg || msg === 'Script error.' || msg === 'Script error') return false;
-      // Solo mostrar si la app no ha cargado todavía
       var el = document.getElementById('root');
       if(el && el.children.length === 0) {
-        el.innerHTML =
-          '<div style="padding:30px;font-family:monospace;background:#fff;margin:40px;border-radius:8px;border:2px solid #fca5a5">' +
-          '<div style="color:#dc2626;font-weight:700;font-size:14px;margin-bottom:10px">&#9888; Error al cargar la aplicaci&oacute;n</div>' +
-          '<div style="color:#374151;font-size:12px">' + msg + '</div>' +
-          '<div style="color:#9ca3af;font-size:11px;margin-top:6px">Linea: ' + line + '</div>' +
-          '</div>';
+        el.innerHTML = '<div style="padding:30px;font-family:monospace;background:#fff;margin:40px;border-radius:8px;border:2px solid #fca5a5">' +
+          '<div style="color:#dc2626;font-weight:700;font-size:14px;margin-bottom:10px">&#9888; Error al cargar</div>' +
+          '<div style="color:#374151;font-size:12px">' + msg + '</div></div>';
       }
       return false;
     };
@@ -105,16 +85,6 @@ const {
   useRef,
   useCallback
 } = React;
-
-// ─── Safe localStorage (no crashea si el navegador bloquea el almacenamiento) ──
-const lsGet = (k) => { try { return localStorage.getItem(k); } catch(e) { return null; } };
-const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch(e) {} };
-const lsDel = (k) => { try { localStorage.removeItem(k); } catch(e) {} };
-
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-const FB_CFG_KEY = "tradingctrl-fb-config";
-const WS_KEY = "tradingctrl-workspace";
 const PROPFIRMS_FOREX = ["FTMO", "FundedNext", "The5ers", "Blueberry Funded", "Wall Street Funded", "E8 Funding", "True Forex Funds", "Fidelcrest", "City Traders Imperium", "Funded Trading Plus", "Goat Funded Trader", "Audacity Capital", "SurgeTrader", "Hola Prime", "Otro (Forex)"];
 const PROPFIRMS_FUTURES = ["Bullfy", "Tradeify", "Apex Trader Funding", "Lucid Trading", "Alpha", "Take Profit Trader", "Topstep", "Earn2Trade", "Leeloo Trading", "Bulenox", "Uprofit Trader", "MyFuturesFunded", "Otro (Futuros)"];
 const CAT_IN = ["Retiro PropFirm", "Dividendos", "Intereses", "Bono / Challenge", "Otros ingresos"];
@@ -136,8 +106,6 @@ const TRIQS = [{
 }];
 const NOW = new Date(),
   CY = NOW.getFullYear();
-
-// ─── Utils ────────────────────────────────────────────────────────────────────
 const fE = n => new Intl.NumberFormat("es-ES", {
   style: "currency",
   currency: "EUR",
@@ -175,9 +143,9 @@ const ICONS = {
   trash: "M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6",
   clip: "M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48",
   dl: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3",
+  up: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12",
   x: "M18 6L6 18M6 6l12 12",
   edit: "M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z",
-  cloud: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z",
   settings: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
 };
 const Toggle = ({
@@ -197,187 +165,41 @@ const Toggle = ({
   }
 }));
 
-// ─── Setup Screen ─────────────────────────────────────────────────────────────
-function SetupScreen({
-  onDone
-}) {
-  const [cfg, setCfg] = useState('');
-  const [ws, setWs] = useState('');
-  const [err, setErr] = useState('');
-  const [testing, setTesting] = useState(false);
-  const connect = async () => {
-    setErr('');
-    setTesting(true);
-    try {
-      // Strip any wrapping: "const firebaseConfig = {...};" or just the object
-      let raw = cfg.trim().replace(/^const\s+firebaseConfig\s*=\s*/, '').replace(/^var\s+firebaseConfig\s*=\s*/, '').replace(/^let\s+firebaseConfig\s*=\s*/, '').replace(/;?\s*$/, '');
-
-      // Parse as JS object (handles both unquoted keys and proper JSON)
-      let parsed;
-      try {
-        // Try JSON first
-        parsed = JSON.parse(raw);
-      } catch {
-        // Fall back to JS object evaluation (Firebase default format)
-        // eslint-disable-next-line no-new-func
-        parsed = new Function('return (' + raw + ')')();
+// Comprime imágenes (máx 1100px, JPEG 0.6) para que quepan en Firebase
+const compressImage = (dataUrl, mime) => new Promise(resolve => {
+  if (!mime || !mime.startsWith("image/")) {
+    resolve(dataUrl);
+    return;
+  }
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1100;
+    let w = img.width,
+      h = img.height;
+    if (w > MAX || h > MAX) {
+      if (w > h) {
+        h = Math.round(h * MAX / w);
+        w = MAX;
+      } else {
+        w = Math.round(w * MAX / h);
+        h = MAX;
       }
-      if (!parsed || typeof parsed !== 'object') throw new Error("No se pudo leer la configuración");
-      if (!parsed.apiKey) throw new Error("Falta apiKey en la configuración");
-      if (!parsed.databaseURL) throw new Error("Falta databaseURL. Asegúrate de haber creado la Realtime Database y de copiar la URL (empieza por https://...)");
-      if (!ws.trim()) throw new Error("Introduce un nombre de workspace");
-
-      // Test connection
-      if (firebase.apps.length) {
-        for (const a of firebase.apps) await a.delete();
-      }
-      const app = firebase.initializeApp(parsed);
-      const db = firebase.database(app);
-      await db.ref(`tradingctrl/${ws.trim()}/ping`).set(Date.now());
-      lsSet(FB_CFG_KEY, JSON.stringify(parsed));
-      lsSet(WS_KEY, ws.trim());
-      setTesting(false);
-      onDone(parsed, ws.trim());
-    } catch (e) {
-      setErr(e.message || 'Error de conexión');
-      setTesting(false);
     }
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+    resolve(canvas.toDataURL("image/jpeg", 0.6));
   };
-  return /*#__PURE__*/React.createElement("div", {
-    className: "setup-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "setup-card"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "'Bebas Neue',sans-serif",
-      fontSize: 28,
-      letterSpacing: 3,
-      marginBottom: 4
-    }
-  }, "TRADING", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: "#0284c7"
-    }
-  }, "CTRL")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 12,
-      color: "#6b7280",
-      marginBottom: 32,
-      fontWeight: 500
-    }
-  }, "Configuraci\xF3n inicial \xB7 Sincronizaci\xF3n en la nube"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#f0f9ff",
-      border: "1.5px solid #bae6fd",
-      borderRadius: 10,
-      padding: 20,
-      marginBottom: 28
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 10,
-      color: "#0284c7",
-      fontWeight: 700,
-      letterSpacing: 1.5,
-      marginBottom: 16
-    }
-  }, "C\xD3MO CONFIGURARLO (5 MIN, GRATIS)"), [[1, /*#__PURE__*/React.createElement(React.Fragment, null, "Ve a ", /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement("a", {
-    href: "https://console.firebase.google.com",
-    target: "_blank",
-    style: {
-      color: "#0284c7"
-    }
-  }, "console.firebase.google.com")), " e inicia sesi\xF3n con tu Google.")], [2, /*#__PURE__*/React.createElement(React.Fragment, null, "Pulsa ", /*#__PURE__*/React.createElement("strong", null, "\xABCrear un proyecto\xBB"), ". Ponle el nombre que quieras (ej: ", /*#__PURE__*/React.createElement("code", null, "mi-trading"), "). Desactiva Google Analytics si te lo pide.")], [3, /*#__PURE__*/React.createElement(React.Fragment, null, "Dentro del proyecto, en el men\xFA lateral ve a ", /*#__PURE__*/React.createElement("strong", null, "\xABCompilaci\xF3n\xBB \u2192 \xABRealtime Database\xBB"), ". Pulsa ", /*#__PURE__*/React.createElement("strong", null, "\xABCrear base de datos\xBB"), ". Elige la regi\xF3n m\xE1s cercana (ej: europe-west1). Empieza en ", /*#__PURE__*/React.createElement("strong", null, "\xABModo de prueba\xBB"), ".")], [4, /*#__PURE__*/React.createElement(React.Fragment, null, "Ahora ve al icono \u2699\uFE0F \u2192 ", /*#__PURE__*/React.createElement("strong", null, "\xABConfiguraci\xF3n del proyecto\xBB"), ". Baja hasta ", /*#__PURE__*/React.createElement("strong", null, "\xABTus apps\xBB"), " \u2192 ", /*#__PURE__*/React.createElement("strong", null, "\xAB</> Web\xBB"), ". Registra la app (nombre libre) y copia el objeto ", /*#__PURE__*/React.createElement("code", null, "firebaseConfig"), ".")], [5, /*#__PURE__*/React.createElement(React.Fragment, null, "Pega ese objeto en el campo de abajo y elige un nombre de workspace (act\xFAa como tu clave personal).")]].map(([n, t]) => /*#__PURE__*/React.createElement("div", {
-    key: n,
-    className: "step-row"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "step-num"
-  }, n), /*#__PURE__*/React.createElement("div", {
-    className: "step-text"
-  }, t)))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 16
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "lbl"
-  }, "Pega aqu\xED tu firebaseConfig"), /*#__PURE__*/React.createElement("textarea", {
-    className: "inp-ta",
-    placeholder: `const firebaseConfig = {\n  apiKey: "AIza...",\n  authDomain: "mi-proyecto.firebaseapp.com",\n  databaseURL: "https://mi-proyecto-default-rtdb.europe-west1.firebasedatabase.app",\n  projectId: "mi-proyecto",\n  storageBucket: "mi-proyecto.appspot.com",\n  messagingSenderId: "123456789",\n  appId: "1:123..."\n};`,
-    value: cfg,
-    onChange: e => setCfg(e.target.value),
-    style: {
-      fontFamily: "monospace",
-      fontSize: 11,
-      minHeight: 120
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 10,
-      color: "#6b7280",
-      marginTop: 5,
-      lineHeight: 1.6
-    }
-  }, "Pega directamente el bloque que te da Firebase \u2014 con o sin ", /*#__PURE__*/React.createElement("code", {
-    style: {
-      background: "#f0f4f8",
-      padding: "1px 4px",
-      borderRadius: 3,
-      fontSize: 10
-    }
-  }, "const firebaseConfig ="), ", se acepta cualquier formato.")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "lbl"
-  }, "Nombre del workspace (tu clave personal)"), /*#__PURE__*/React.createElement("input", {
-    className: "inp",
-    type: "text",
-    placeholder: "ej: omar-trading-2025",
-    value: ws,
-    onChange: e => setWs(e.target.value)
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: 10,
-      color: "#9ca3af",
-      marginTop: 5
-    }
-  }, "Solo t\xFA conocer\xE1s este nombre. Es tu identificador \xFAnico dentro de la base de datos.")), err && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#fef2f2",
-      border: "1.5px solid #fca5a5",
-      borderRadius: 6,
-      padding: "10px 14px",
-      fontSize: 11,
-      color: "#dc2626",
-      marginBottom: 14,
-      fontWeight: 500
-    }
-  }, err), /*#__PURE__*/React.createElement("button", {
-    className: "btn",
-    style: {
-      width: "100%",
-      justifyContent: "center",
-      fontSize: 12,
-      padding: "12px"
-    },
-    onClick: connect,
-    disabled: testing || !cfg.trim() || !ws.trim()
-  }, /*#__PURE__*/React.createElement(Ic, {
-    d: ICONS.cloud,
-    s: 14,
-    c: "#fff"
-  }), testing ? "Conectando…" : "Conectar y empezar")));
-}
-
-// ─── Main App ─────────────────────────────────────────────────────────────────
+  img.onerror = () => resolve(dataUrl);
+  img.src = dataUrl;
+});
 function TradingApp({
   db,
-  workspace,
-  onReset
+  workspace
 }) {
   const [rows, setRows] = useState([]);
-  const [syncStatus, setSyncStatus] = useState("connecting"); // connecting | ok | error
+  const [syncStatus, setSync] = useState("connecting");
   const [tab, setTab] = useState("dash");
   const [form, setForm] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -387,75 +209,49 @@ function TradingApp({
   const [ftype, setFtype] = useState("all");
   const [ffirm, setFfirm] = useState("all");
   const fileRef = useRef();
-  const importJSONRef = useRef();
+  const importRef = useRef();
   const dbRef = db.ref(`tradingctrl/${workspace}/entries`);
 
-  // ── Real-time listener ────────────────────────────────────────────────────
+  // Firebase es la fuente de verdad. localStorage solo cache de lectura.
   useEffect(() => {
-    setSyncStatus("connecting");
-    // Load from localStorage first as fallback
-    const stored = lsGet("tradingctrl_local_backup");
-    if (stored) {
-      try {
-        const data = JSON.parse(stored);
-        if (data && Array.isArray(data)) setRows(data);
-      } catch {}
-    }
-
-    // Try to connect to Firebase
+    setSync("connecting");
+    try {
+      const cached = localStorage.getItem("tradingctrl_cache");
+      if (cached) {
+        const d = JSON.parse(cached);
+        if (Array.isArray(d)) setRows(d);
+      }
+    } catch {}
     const unsub = dbRef.on("value", snap => {
       const val = snap.val();
       let data = val ? Object.values(val) : [];
-      // Recuperar adjuntos: prioriza los de Firebase, si no hay usa los de localStorage
-      let localFiles = {};
-      try {
-        localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
-      } catch {}
-      data = data.map(r => ({
-        ...r,
-        files: r.files && r.files.length > 0 ? r.files : localFiles[r.id] || []
-      }));
       data.sort((a, b) => new Date(b.date) - new Date(a.date));
       setRows(data);
-      // Save to localStorage as backup
       try {
-        lsSet("tradingctrl_local_backup", JSON.stringify(data));
+        localStorage.setItem("tradingctrl_cache", JSON.stringify(data));
       } catch {}
-      setSyncStatus("ok");
+      setSync("ok");
     }, err => {
-      console.error("Firebase error:", err);
-      setSyncStatus("error");
+      console.error("Firebase:", err);
+      setSync("error");
     });
     return () => dbRef.off("value", unsub);
   }, []);
 
-  // ── Guardar/borrar entradas INDIVIDUALES (evita "Write too large") ────────
+  // Guardar/borrar entradas INDIVIDUALES con imágenes incluidas (comprimidas)
   const saveEntry = useCallback(entry => {
-    setSyncStatus("syncing");
-    // Backup de adjuntos en localStorage por ID
-    try {
-      const localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
-      if (entry.files && entry.files.length > 0) localFiles[entry.id] = entry.files;else delete localFiles[entry.id];
-      lsSet("tradingctrl_files", JSON.stringify(localFiles));
-    } catch {}
-    try {
-      lsSet("tradingctrl_local_backup", JSON.stringify(rows));
-    } catch {}
-    dbRef.child(entry.id).set(entry).then(() => setSyncStatus("ok")).catch(e => {
-      console.error("Save error:", e);
-      setSyncStatus("error");
+    setSync("syncing");
+    dbRef.child(entry.id).set(entry).then(() => setSync("ok")).catch(e => {
+      console.error("Save:", e);
+      setSync("error");
+      alert("Error al guardar. Si tiene imágenes muy pesadas, prueba con menos o más pequeñas.");
     });
-  }, [rows]);
+  }, []);
   const deleteEntry = useCallback(id => {
-    setSyncStatus("syncing");
-    try {
-      const localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
-      delete localFiles[id];
-      lsSet("tradingctrl_files", JSON.stringify(localFiles));
-    } catch {}
-    dbRef.child(id).remove().then(() => setSyncStatus("ok")).catch(e => {
-      console.error("Delete error:", e);
-      setSyncStatus("error");
+    setSync("syncing");
+    dbRef.child(id).remove().then(() => setSync("ok")).catch(e => {
+      console.error(e);
+      setSync("error");
     });
   }, []);
   const EMPTY = {
@@ -489,8 +285,6 @@ function TradingApp({
     ...f,
     ...p
   }));
-
-  // Filters
   const years = [...new Set(rows.map(r => String(getY(r.date))))].sort().reverse();
   if (!years.includes(String(CY))) years.unshift(String(CY));
   const inView = rows.filter(r => {
@@ -508,8 +302,6 @@ function TradingApp({
   const totalOut = inView.filter(r => r.type === "out").reduce((s, r) => s + toEUR(r), 0);
   const net = totalIn - totalOut;
   const roi = totalOut > 0 ? net / totalOut * 100 : null;
-
-  // Detect display currency from visible entries
   const viewCurrencies = [...new Set(inView.map(r => r.currency || "EUR"))];
   const displayCurrency = viewCurrencies.length === 1 ? viewCurrencies[0] : "MIX";
   const fmtD = displayCurrency === "USD" ? fU : fE;
@@ -536,8 +328,6 @@ function TradingApp({
       n: fe.length
     };
   }).sort((a, b) => b.total - a.total);
-
-  // CRUD
   const submit = () => {
     if (!form.desc || !form.amount) return;
     const row = {
@@ -565,8 +355,7 @@ function TradingApp({
   };
   const del = id => {
     if (!window.confirm("¿Eliminar este registro?")) return;
-    const newRows = rows.filter(r => r.id !== id);
-    setRows(newRows);
+    setRows(rows.filter(r => r.id !== id));
     deleteEntry(id);
   };
   const openEdit = r => setForm(recalc({
@@ -577,42 +366,11 @@ function TradingApp({
     feeIntermediary: r.feeIntermediary?.toString() || "",
     feeTransfer: r.feeTransfer?.toString() || "",
     rate: r.rate?.toString() || "",
-    amount: r.amount?.toString() || ""
+    amount: r.amount?.toString() || "",
+    files: r.files || []
   }));
 
-  // Comprime imágenes a máx 1280px y JPEG 0.7 para que quepan en Firebase
-  const compressImage = (dataUrl, mime) => new Promise(resolve => {
-    if (!mime.startsWith("image/")) {
-      resolve(dataUrl);
-      return;
-    }
-    const img = new Image();
-    img.onload = () => {
-      const MAX = 1280;
-      let {
-        width,
-        height
-      } = img;
-      if (width > MAX || height > MAX) {
-        if (width > height) {
-          height = Math.round(height * MAX / width);
-          width = MAX;
-        } else {
-          width = Math.round(width * MAX / height);
-          height = MAX;
-        }
-      }
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-      resolve(canvas.toDataURL("image/jpeg", 0.7));
-    };
-    img.onerror = () => resolve(dataUrl);
-    img.src = dataUrl;
-  });
-
-  // Paste from clipboard
+  // Pegar imágenes del portapapeles (comprimidas)
   useEffect(() => {
     if (!form) return;
     const onPaste = e => {
@@ -625,13 +383,13 @@ function TradingApp({
         const ts = new Date().toISOString().replace(/[:.]/g, "-");
         const r = new FileReader();
         r.onload = async ev => {
-          const compressed = await compressImage(ev.target.result, file.type);
+          const c = await compressImage(ev.target.result, file.type);
           setForm(f => ({
             ...f,
             files: [...f.files, {
               name: `captura-${ts}.jpg`,
               type: "image/jpeg",
-              data: compressed
+              data: c
             }]
           }));
         };
@@ -643,19 +401,19 @@ function TradingApp({
   }, [form]);
   const handleFiles = e => {
     Array.from(e.target.files).forEach(file => {
-      if (file.size > 10 * 1024 * 1024) {
-        alert("Máx. 10 MB");
+      if (file.size > 15 * 1024 * 1024) {
+        alert("Máx. 15 MB");
         return;
       }
       const r = new FileReader();
       r.onload = async ev => {
-        const compressed = await compressImage(ev.target.result, file.type);
+        const c = await compressImage(ev.target.result, file.type);
         setForm(f => ({
           ...f,
           files: [...f.files, {
             name: file.name,
             type: file.type.startsWith("image/") ? "image/jpeg" : file.type,
-            data: compressed
+            data: c
           }]
         }));
       };
@@ -664,7 +422,52 @@ function TradingApp({
     e.target.value = "";
   };
 
-  // Excel export
+  // Backup JSON
+  const exportJSON = () => {
+    const data = JSON.stringify({
+      app: "TradingCTRL",
+      workspace,
+      exported: new Date().toISOString(),
+      entries: rows
+    }, null, 2);
+    const blob = new Blob([data], {
+      type: "application/json"
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `TradingCTRL-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Restaurar JSON
+  const importJSON = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        const entries = parsed.entries || parsed;
+        if (!Array.isArray(entries)) throw new Error("Formato no válido");
+        if (!window.confirm(`¿Restaurar ${entries.length} registros? Esto AÑADE/ACTUALIZA los registros del backup (no borra los que ya tengas con otro ID).`)) return;
+        setSync("syncing");
+        const updates = {};
+        entries.forEach(en => {
+          if (en.id) updates[en.id] = en;
+        });
+        dbRef.update(updates).then(() => setSync("ok")).catch(er => {
+          console.error(er);
+          setSync("error");
+        });
+      } catch (err) {
+        alert("Error al leer el backup: " + err.message);
+      }
+    };
+    r.readAsText(file);
+    e.target.value = "";
+  };
   const exportExcel = () => {
     const XLSX = window.XLSX;
     const wb = XLSX.utils.book_new();
@@ -977,7 +780,7 @@ function TradingApp({
     const s2rows = [headers.map(h => ({
       v: h,
       s: hdrStyle
-    })), ...inView.sort((a, b) => new Date(b.date) - new Date(a.date)).map(r => {
+    })), ...inView.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(r => {
       const isIn = r.type === "in";
       const bg = isIn ? C.inBg : C.outBg;
       const cell = (v, extra = {}) => ({
@@ -1304,9 +1107,7 @@ function TradingApp({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       minHeight: "100vh",
-      background: "#eef1f6",
-      fontFamily: "'IBM Plex Mono','Fira Mono',monospace",
-      color: "#111827"
+      background: "#eef1f6"
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "hdr"
@@ -1340,9 +1141,6 @@ function TradingApp({
     className: "sync-dot",
     style: {
       background: syncColor,
-      width: 7,
-      height: 7,
-      borderRadius: "50%",
       animation: syncStatus === "syncing" ? "pulse 1.2s infinite" : ""
     }
   }), syncLabel), /*#__PURE__*/React.createElement("div", {
@@ -1351,25 +1149,36 @@ function TradingApp({
     }
   }), /*#__PURE__*/React.createElement("button", {
     className: "ghost",
+    onClick: exportJSON,
+    title: "Descargar copia de seguridad"
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.dl,
+    s: 13,
+    c: "#0284c7"
+  }), " Backup"), /*#__PURE__*/React.createElement("button", {
+    className: "ghost",
+    onClick: () => importRef.current.click(),
+    title: "Restaurar desde copia"
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.up,
+    s: 13,
+    c: "#4b5563"
+  }), " Restaurar"), /*#__PURE__*/React.createElement("input", {
+    ref: importRef,
+    type: "file",
+    accept: "application/json",
+    style: {
+      display: "none"
+    },
+    onChange: importJSON
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "ghost",
     onClick: exportExcel
   }, /*#__PURE__*/React.createElement(Ic, {
     d: ICONS.dl,
     s: 13,
     c: "#15803d"
   }), " Excel"), /*#__PURE__*/React.createElement("button", {
-    className: "ghost",
-    style: {
-      fontSize: 10,
-      color: "#9ca3af"
-    },
-    onClick: () => {
-      if (window.confirm("¿Desconectar y borrar configuración local?")) onReset();
-    }
-  }, /*#__PURE__*/React.createElement(Ic, {
-    d: ICONS.settings,
-    s: 13,
-    c: "#9ca3af"
-  })), /*#__PURE__*/React.createElement("button", {
     className: "btn",
     onClick: () => setForm({
       ...EMPTY
@@ -1548,7 +1357,7 @@ function TradingApp({
       color: "#a16207",
       fontWeight: 500
     }
-  }, "\u26A0\uFE0F Los registros visibles mezclan EUR y USD. Los totales suman ambas monedas como si fueran la misma \u2014 filtra por tipo de moneda o a\xF1ade tipos de cambio para ver valores correctamente convertidos."), /*#__PURE__*/React.createElement("div", {
+  }, "\u26A0\uFE0F Los registros visibles mezclan EUR y USD. Los totales suman ambas monedas como si fueran la misma \u2014 filtra por moneda o a\xF1ade tipos de cambio."), /*#__PURE__*/React.createElement("div", {
     className: "card",
     style: {
       marginBottom: 14
@@ -1659,8 +1468,8 @@ function TradingApp({
       paddingTop: 8
     }
   }, monthly.map(m => {
-    const sym = displayCurrency === "USD" ? "$" : "€";
-    const txt = m.net === 0 ? "·" : (m.net > 0 ? "+" : "") + Math.round(m.net) + sym;
+    const s = displayCurrency === "USD" ? "$" : "€";
+    const txt = m.net === 0 ? "·" : (m.net > 0 ? "+" : "") + Math.round(m.net) + s;
     return /*#__PURE__*/React.createElement("div", {
       key: m.mi,
       style: {
@@ -1827,7 +1636,7 @@ function TradingApp({
       whiteSpace: "nowrap",
       background: "#f8fafc"
     }
-  }, h)))), /*#__PURE__*/React.createElement("tbody", null, [...inView].sort((a, b) => new Date(b.date) - new Date(a.date)).map(r => /*#__PURE__*/React.createElement("tr", {
+  }, h)))), /*#__PURE__*/React.createElement("tbody", null, inView.slice().sort((a, b) => new Date(b.date) - new Date(a.date)).map(r => /*#__PURE__*/React.createElement("tr", {
     key: r.id,
     className: "trow",
     style: {
@@ -2484,15 +2293,10 @@ function TradingApp({
     step: "0.01",
     placeholder: "0.00",
     value: form.grossAmountNative,
-    onChange: e => {
-      const usdVal = e.target.value;
-      const eur = usdVal && form.rate ? (parseFloat(usdVal) / parseFloat(form.rate)).toFixed(2) : "";
-      patch({
-        grossAmountNative: usdVal,
-        amount: usdVal,
-        eurAmount: eur
-      });
-    },
+    onChange: e => patch({
+      grossAmountNative: e.target.value,
+      amount: e.target.value
+    }),
     style: {
       paddingLeft: 22
     }
@@ -2511,14 +2315,9 @@ function TradingApp({
     step: "0.0001",
     placeholder: "ej: 1.0850",
     value: form.rate,
-    onChange: e => {
-      const rateVal = e.target.value;
-      const eur = rateVal && form.grossAmountNative ? (parseFloat(form.grossAmountNative) / parseFloat(rateVal)).toFixed(2) : "";
-      patch({
-        rate: rateVal,
-        eurAmount: eur
-      });
-    }
+    onChange: e => patch({
+      rate: e.target.value
+    })
   }), form.rate && form.grossAmountNative && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 8,
@@ -2692,8 +2491,6 @@ function TradingApp({
     c: "#0284c7"
   }), " Descargar archivo"))));
 }
-
-// ─── Root ─────────────────────────────────────────────────────────────────────
 const HARDCODED_CONFIG = {
   apiKey: "AIzaSyAGGw2IJcSM0zushSUQv-SNmOm6mkTlY_g",
   authDomain: "ocbt-tracker.firebaseapp.com",
@@ -2711,7 +2508,7 @@ function Root() {
       if (firebase.apps.length === 0) firebase.initializeApp(HARDCODED_CONFIG);
       setDbInst(firebase.database());
     } catch (e) {
-      console.error("Firebase init error:", e);
+      console.error("Firebase init:", e);
     }
   }, []);
   if (!dbInst) return /*#__PURE__*/React.createElement("div", {
@@ -2732,8 +2529,7 @@ function Root() {
   }, "Conectando\u2026"));
   return /*#__PURE__*/React.createElement(TradingApp, {
     db: dbInst,
-    workspace: HARDCODED_WORKSPACE,
-    onReset: () => {}
+    workspace: HARDCODED_WORKSPACE
   });
 }
 ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(Root, null));
