@@ -106,6 +106,12 @@ const {
   useCallback
 } = React;
 
+// ─── Safe localStorage (no crashea si el navegador bloquea el almacenamiento) ──
+const lsGet = (k) => { try { return localStorage.getItem(k); } catch(e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch(e) {} };
+const lsDel = (k) => { try { localStorage.removeItem(k); } catch(e) {} };
+
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 const FB_CFG_KEY = "tradingctrl-fb-config";
 const WS_KEY = "tradingctrl-workspace";
@@ -228,8 +234,8 @@ function SetupScreen({
       const app = firebase.initializeApp(parsed);
       const db = firebase.database(app);
       await db.ref(`tradingctrl/${ws.trim()}/ping`).set(Date.now());
-      localStorage.setItem(FB_CFG_KEY, JSON.stringify(parsed));
-      localStorage.setItem(WS_KEY, ws.trim());
+      lsSet(FB_CFG_KEY, JSON.stringify(parsed));
+      lsSet(WS_KEY, ws.trim());
       setTesting(false);
       onDone(parsed, ws.trim());
     } catch (e) {
@@ -388,7 +394,7 @@ function TradingApp({
   useEffect(() => {
     setSyncStatus("connecting");
     // Load from localStorage first as fallback
-    const stored = localStorage.getItem("tradingctrl_local_backup");
+    const stored = lsGet("tradingctrl_local_backup");
     if (stored) {
       try {
         const data = JSON.parse(stored);
@@ -403,7 +409,7 @@ function TradingApp({
       // Recuperar adjuntos: prioriza los de Firebase, si no hay usa los de localStorage
       let localFiles = {};
       try {
-        localFiles = JSON.parse(localStorage.getItem("tradingctrl_files") || "{}");
+        localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
       } catch {}
       data = data.map(r => ({
         ...r,
@@ -413,7 +419,7 @@ function TradingApp({
       setRows(data);
       // Save to localStorage as backup
       try {
-        localStorage.setItem("tradingctrl_local_backup", JSON.stringify(data));
+        lsSet("tradingctrl_local_backup", JSON.stringify(data));
       } catch {}
       setSyncStatus("ok");
     }, err => {
@@ -428,12 +434,12 @@ function TradingApp({
     setSyncStatus("syncing");
     // Backup de adjuntos en localStorage por ID
     try {
-      const localFiles = JSON.parse(localStorage.getItem("tradingctrl_files") || "{}");
+      const localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
       if (entry.files && entry.files.length > 0) localFiles[entry.id] = entry.files;else delete localFiles[entry.id];
-      localStorage.setItem("tradingctrl_files", JSON.stringify(localFiles));
+      lsSet("tradingctrl_files", JSON.stringify(localFiles));
     } catch {}
     try {
-      localStorage.setItem("tradingctrl_local_backup", JSON.stringify(rows));
+      lsSet("tradingctrl_local_backup", JSON.stringify(rows));
     } catch {}
     dbRef.child(entry.id).set(entry).then(() => setSyncStatus("ok")).catch(e => {
       console.error("Save error:", e);
@@ -443,9 +449,9 @@ function TradingApp({
   const deleteEntry = useCallback(id => {
     setSyncStatus("syncing");
     try {
-      const localFiles = JSON.parse(localStorage.getItem("tradingctrl_files") || "{}");
+      const localFiles = JSON.parse(lsGet("tradingctrl_files") || "{}");
       delete localFiles[id];
-      localStorage.setItem("tradingctrl_files", JSON.stringify(localFiles));
+      lsSet("tradingctrl_files", JSON.stringify(localFiles));
     } catch {}
     dbRef.child(id).remove().then(() => setSyncStatus("ok")).catch(e => {
       console.error("Delete error:", e);
@@ -2032,10 +2038,4 @@ function TradingApp({
     }
   }, /*#__PURE__*/React.createElement("label", {
     className: "lbl"
-  }, "PropFirm", /*#__PURE__*/React.createElement("span", {
-    className: "lbl-note"
-  }, "\u2014 opcional")), /*#__PURE__*/React.createElement("select", {
-    className: "sel",
-    value: form.firm,
-    onChange: e => patch({
-     
+  }, "PropFirm", /*#__PURE__*/React.createElement("span
