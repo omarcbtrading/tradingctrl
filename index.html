@@ -84,13 +84,18 @@
 <div id="root"></div>
   <script>
     window.onerror = function(msg, src, line, col, err) {
+      // Ignorar errores genéricos cross-origin de los CDN (no son fatales)
+      if(!msg || msg === 'Script error.' || msg === 'Script error') return false;
+      // Solo mostrar si la app no ha cargado todavía
       var el = document.getElementById('root');
-      if(el) el.innerHTML =
-        '<div style="padding:30px;font-family:monospace;background:#fff;margin:40px;border-radius:8px;border:2px solid #fca5a5">' +
-        '<div style="color:#dc2626;font-weight:700;font-size:14px;margin-bottom:10px">&#9888; Error al cargar la aplicación</div>' +
-        '<div style="color:#374151;font-size:12px">' + msg + '</div>' +
-        '<div style="color:#9ca3af;font-size:11px;margin-top:6px">Linea: ' + line + '</div>' +
-        '</div>';
+      if(el && el.children.length === 0) {
+        el.innerHTML =
+          '<div style="padding:30px;font-family:monospace;background:#fff;margin:40px;border-radius:8px;border:2px solid #fca5a5">' +
+          '<div style="color:#dc2626;font-weight:700;font-size:14px;margin-bottom:10px">&#9888; Error al cargar la aplicaci&oacute;n</div>' +
+          '<div style="color:#374151;font-size:12px">' + msg + '</div>' +
+          '<div style="color:#9ca3af;font-size:11px;margin-top:6px">Linea: ' + line + '</div>' +
+          '</div>';
+      }
       return false;
     };
   </script>
@@ -1010,10 +1015,4 @@ function TradingApp({db, workspace, onReset}) {
   );
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
-const HARDCODED_CONFIG = {
-  apiKey: "AIzaSyAGGw2IJcSM0zushSUQv-SNmOm6mkTlY_g",
-  authDomain: "ocbt-tracker.firebaseapp.com",
-  databaseURL: "https://ocbt-tracker-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "ocbt-tracker",
-  stor
+// ─── Root ──────────────────────────────────────────
