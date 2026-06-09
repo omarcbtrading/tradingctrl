@@ -276,7 +276,12 @@ function TradingApp({db, workspace, onReset}) {
     // Try to connect to Firebase
     const unsub = dbRef.on("value", snap=>{
       const val = snap.val();
-      const data = val ? Object.values(val) : [];
+      let data = val ? Object.values(val) : [];
+      // Restaurar adjuntos desde localStorage
+      try {
+        const localFiles = JSON.parse(localStorage.getItem("tradingctrl_files")||"{}");
+        data = data.map(r=>({ ...r, files: localFiles[r.id] || r.files || [] }));
+      } catch {}
       setRows(data);
       // Save to localStorage as backup
       try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(data)); } catch {}
@@ -289,11 +294,20 @@ function TradingApp({db, workspace, onReset}) {
     return ()=>dbRef.off("value", unsub);
   },[]);
 
-  // ── Save to Firebase ──────────────────────────────────────────────────────
+  // ── Save to Firebase (sin adjuntos — se guardan solo en local) ───────────
   const saveRows = useCallback(newRows=>{
     setSyncStatus("syncing");
+    // Guardar adjuntos en localStorage por ID
+    const localFiles = {};
+    newRows.forEach(r=>{
+      if(r.files && r.files.length>0) localFiles[r.id] = r.files;
+    });
+    try { localStorage.setItem("tradingctrl_files", JSON.stringify(localFiles)); } catch {}
+    // Guardar en localStorage como backup
+    try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(newRows)); } catch {}
+    // Guardar en Firebase SIN los archivos (evita "Write too large")
     const obj = {};
-    newRows.forEach(r=>{ obj[r.id]=r; });
+    newRows.forEach(r=>{ obj[r.id] = {...r, files:[]}; });
     dbRef.set(obj).then(()=>setSyncStatus("ok")).catch(()=>setSyncStatus("error"));
   },[]);
 
