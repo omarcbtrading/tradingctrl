@@ -2038,4 +2038,705 @@ function TradingApp({
     }
   }, /*#__PURE__*/React.createElement("label", {
     className: "lbl"
-  }, "PropFirm", /*#__PURE__*/React.createElement("span
+  }, "PropFirm", /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note"
+  }, "\u2014 opcional")), /*#__PURE__*/React.createElement("select", {
+    className: "sel",
+    value: form.firm,
+    onChange: e => patch({
+      firm: e.target.value
+    })
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2014 Sin PropFirm \u2014"), /*#__PURE__*/React.createElement("optgroup", {
+    label: "Forex / CFD"
+  }, PROPFIRMS_FOREX.map(f => /*#__PURE__*/React.createElement("option", {
+    key: f
+  }, f))), /*#__PURE__*/React.createElement("optgroup", {
+    label: "Futuros"
+  }, PROPFIRMS_FUTURES.map(f => /*#__PURE__*/React.createElement("option", {
+    key: f
+  }, f))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Descripci\xF3n"), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "text",
+    placeholder: "Ej: Retiro FTMO 100K, Challenge TradingView\u2026",
+    value: form.desc,
+    onChange: e => patch({
+      desc: e.target.value
+    })
+  })), isRetiro && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Moneda recibida"), /*#__PURE__*/React.createElement("div", {
+    className: "seg",
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: `seg-o${form.currency === "EUR" ? " on-neutral" : ""}`,
+    onClick: () => patch({
+      currency: "EUR",
+      rate: "",
+      grossAmountNative: "",
+      amount: ""
+    })
+  }, "\u20AC EUR"), /*#__PURE__*/React.createElement("button", {
+    className: `seg-o${form.currency === "USD" ? " on-neutral" : ""}`,
+    onClick: () => patch({
+      currency: "USD",
+      grossAmountNative: "",
+      amount: ""
+    })
+  }, "$ USD")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Importe bruto recibido ", /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note"
+  }, "(", form.currency, ")")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: "absolute",
+      left: 11,
+      top: "50%",
+      transform: "translateY(-50%)",
+      fontSize: 13,
+      color: "#6b7280",
+      fontWeight: 600,
+      pointerEvents: "none"
+    }
+  }, sym), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.01",
+    placeholder: "0.00",
+    value: form.grossAmountNative,
+    onChange: e => patch({
+      grossAmountNative: e.target.value
+    }),
+    style: {
+      paddingLeft: 24
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "split-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: form.splitEnabled ? 14 : 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      color: "#0284c7",
+      letterSpacing: "1px",
+      fontWeight: 700,
+      textTransform: "uppercase"
+    }
+  }, "Profit Split"), /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note",
+    style: {
+      marginLeft: 8
+    }
+  }, "opcional")), /*#__PURE__*/React.createElement(Toggle, {
+    on: form.splitEnabled,
+    onChange: () => patch({
+      splitEnabled: !form.splitEnabled,
+      splitPct: ""
+    }),
+    colorOn: "#0284c7"
+  })), form.splitEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "2fr 1fr",
+      gap: 10,
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: "#374151",
+      fontWeight: 500
+    }
+  }, "Porcentaje del trader (tu parte)"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    max: "100",
+    step: "0.5",
+    placeholder: "ej: 90",
+    value: form.splitPct,
+    onChange: e => patch({
+      splitPct: e.target.value
+    }),
+    style: {
+      paddingRight: 26,
+      textAlign: "right"
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: "absolute",
+      right: 11,
+      top: "50%",
+      transform: "translateY(-50%)",
+      fontSize: 12,
+      color: "#6b7280",
+      fontWeight: 600,
+      pointerEvents: "none"
+    }
+  }, "%"))), form.splitPct && form.grossAmountNative && (() => {
+    const sp = parseFloat(form.splitPct) / 100,
+      g = parseFloat(form.grossAmountNative) || 0;
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 0,
+        marginTop: 10,
+        borderRadius: 6,
+        overflow: "hidden",
+        border: "1.5px solid #bae6fd"
+      }
+    }, [{
+      l: `Tú (${form.splitPct}%)`,
+      v: `${sym}${(g * sp).toFixed(2)}`,
+      c: "#15803d",
+      bg: "#f0fdf4"
+    }, {
+      l: `PropFirm (${(100 - parseFloat(form.splitPct)).toFixed(0)}%)`,
+      v: `${sym}${(g * (1 - sp)).toFixed(2)}`,
+      c: "#dc2626",
+      bg: "#fef2f2"
+    }].map(s => /*#__PURE__*/React.createElement("div", {
+      key: s.l,
+      style: {
+        flex: 1,
+        padding: "9px 10px",
+        background: s.bg,
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 9,
+        color: "#6b7280",
+        marginBottom: 3,
+        fontWeight: 500
+      }
+    }, s.l), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        color: s.c,
+        fontWeight: 700
+      }
+    }, s.v))));
+  })())), /*#__PURE__*/React.createElement("div", {
+    className: "deduct-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: form.deductEnabled ? 14 : 0
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      color: "#374151",
+      letterSpacing: "1px",
+      fontWeight: 700,
+      textTransform: "uppercase"
+    }
+  }, "Deducciones / Comisiones"), /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note",
+    style: {
+      marginLeft: 8
+    }
+  }, "opcional")), /*#__PURE__*/React.createElement(Toggle, {
+    on: form.deductEnabled,
+    onChange: () => patch({
+      deductEnabled: !form.deductEnabled,
+      feeIntermediary: "",
+      feeTransfer: ""
+    }),
+    colorOn: "#374151"
+  })), form.deductEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: 10,
+      marginBottom: 10
+    }
+  }, [["feeIntermediary", "Intermediario", "ej: WorkMarket ~$30"], ["feeTransfer", "Transferencia", "ej: Wise ~$6.11"]].map(([k, l, note]) => /*#__PURE__*/React.createElement("div", {
+    key: k
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, l, /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note"
+  }, note)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: "absolute",
+      left: 11,
+      top: "50%",
+      transform: "translateY(-50%)",
+      fontSize: 12,
+      color: "#6b7280",
+      fontWeight: 600,
+      pointerEvents: "none"
+    }
+  }, sym), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.01",
+    placeholder: "0.00",
+    value: form[k],
+    onChange: e => patch({
+      [k]: e.target.value
+    }),
+    style: {
+      paddingLeft: 22
+    }
+  }))))), (form.feeIntermediary || form.feeTransfer) && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: "#374151",
+      fontWeight: 500,
+      padding: "7px 11px",
+      background: "#fff",
+      borderRadius: 5,
+      border: "1.5px solid #e5e9f0"
+    }
+  }, "Total comisiones: ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#dc2626"
+    }
+  }, sym, ((parseFloat(form.feeIntermediary) || 0) + (parseFloat(form.feeTransfer) || 0)).toFixed(2))))), form.currency === "USD" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Tipo de cambio EUR/USD"), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.0001",
+    placeholder: "ej: 1.0850",
+    value: form.rate,
+    onChange: e => patch({
+      rate: e.target.value
+    })
+  })), form.amount && /*#__PURE__*/React.createElement("div", {
+    className: "summary-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 9,
+      color: "#6b7280",
+      letterSpacing: "1.5px",
+      fontWeight: 700,
+      marginBottom: 10
+    }
+  }, "RESUMEN DEL RETIRO"), [{
+    l: "Bruto recibido",
+    v: fmtN(parseFloat(form.grossAmountNative) || 0),
+    show: true
+  }, {
+    l: `Después de split (${form.splitPct}%)`,
+    v: fmtN((parseFloat(form.grossAmountNative) || 0) * (parseFloat(form.splitPct) / 100)),
+    show: form.splitEnabled && !!form.splitPct
+  }, {
+    l: "Comisiones descontadas",
+    v: `- ${sym}${((parseFloat(form.feeIntermediary) || 0) + (parseFloat(form.feeTransfer) || 0)).toFixed(2)}`,
+    c: "#dc2626",
+    show: form.deductEnabled && !!(form.feeIntermediary || form.feeTransfer)
+  }].filter(s => s.show).map((s, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 11,
+      color: s.c || "#374151",
+      fontWeight: 500,
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement("span", null, s.l), /*#__PURE__*/React.createElement("span", null, s.v))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 1.5,
+      background: "#86efac",
+      margin: "8px 0"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 15,
+      fontWeight: 700,
+      color: "#15803d"
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "Neto a registrar"), /*#__PURE__*/React.createElement("span", null, fmtN(parseFloat(form.amount)))), form.currency === "USD" && form.rate && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      fontSize: 11,
+      color: "#0284c7",
+      fontWeight: 600,
+      marginTop: 6
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "\u2248 EUR (TC ", form.rate, ")"), /*#__PURE__*/React.createElement("span", null, fE(parseFloat(form.amount) / parseFloat(form.rate)))))), form.type === "in" && !isRetiro && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Importe (\u20AC)"), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.01",
+    placeholder: "0.00",
+    value: form.amount,
+    onChange: e => patch({
+      grossAmountNative: e.target.value,
+      amount: e.target.value
+    })
+  })), form.type === "out" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Moneda del gasto"), /*#__PURE__*/React.createElement("div", {
+    className: "seg",
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: `seg-o${form.currency === "EUR" ? " on-neutral" : ""}`,
+    onClick: () => patch({
+      currency: "EUR",
+      rate: "",
+      grossAmountNative: "",
+      amount: ""
+    })
+  }, "\u20AC EUR"), /*#__PURE__*/React.createElement("button", {
+    className: `seg-o${form.currency === "USD" ? " on-neutral" : ""}`,
+    onClick: () => patch({
+      currency: "USD",
+      grossAmountNative: "",
+      amount: ""
+    })
+  }, "$ USD")), form.currency === "EUR" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Importe (\u20AC)"), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.01",
+    placeholder: "0.00",
+    value: form.amount,
+    onChange: e => patch({
+      amount: e.target.value
+    })
+  })), form.currency === "USD" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Importe ($)"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      position: "absolute",
+      left: 11,
+      top: "50%",
+      transform: "translateY(-50%)",
+      fontSize: 13,
+      color: "#6b7280",
+      fontWeight: 600,
+      pointerEvents: "none"
+    }
+  }, "$"), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.01",
+    placeholder: "0.00",
+    value: form.grossAmountNative,
+    onChange: e => {
+      const usdVal = e.target.value;
+      const eur = usdVal && form.rate ? (parseFloat(usdVal) / parseFloat(form.rate)).toFixed(2) : "";
+      patch({
+        grossAmountNative: usdVal,
+        amount: usdVal,
+        eurAmount: eur
+      });
+    },
+    style: {
+      paddingLeft: 22
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Tipo de cambio EUR/USD ", /*#__PURE__*/React.createElement("span", {
+    className: "lbl-note"
+  }, "\u2014 opcional, solo para ver equivalente")), /*#__PURE__*/React.createElement("input", {
+    className: "inp",
+    type: "number",
+    min: "0",
+    step: "0.0001",
+    placeholder: "ej: 1.0850",
+    value: form.rate,
+    onChange: e => {
+      const rateVal = e.target.value;
+      const eur = rateVal && form.grossAmountNative ? (parseFloat(form.grossAmountNative) / parseFloat(rateVal)).toFixed(2) : "";
+      patch({
+        rate: rateVal,
+        eurAmount: eur
+      });
+    }
+  }), form.rate && form.grossAmountNative && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 8,
+      padding: "8px 12px",
+      background: "#f0f9ff",
+      border: "1.5px solid #bae6fd",
+      borderRadius: 6,
+      fontSize: 11,
+      color: "#0284c7",
+      fontWeight: 600
+    }
+  }, "\u2248 ", fE(parseFloat(form.grossAmountNative) / parseFloat(form.rate)), " al TC ", form.rate)))), /*#__PURE__*/React.createElement("div", {
+    className: "sep"
+  }), /*#__PURE__*/React.createElement("label", {
+    className: "lbl"
+  }, "Justificantes"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: 7,
+      marginBottom: 10,
+      alignItems: "center"
+    }
+  }, form.files.map((f, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 5
+    }
+  }, f.type?.startsWith("image/") && /*#__PURE__*/React.createElement("img", {
+    src: f.data,
+    className: "thumb",
+    alt: ""
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "chip",
+    onClick: () => setPreview(f)
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.clip,
+    s: 9,
+    c: "#0284c7"
+  }), f.name.length > 18 ? f.name.slice(0, 16) + "…" : f.name, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#dc2626",
+      marginLeft: 3,
+      fontSize: 14,
+      lineHeight: 1
+    },
+    onClick: e => {
+      e.stopPropagation();
+      patch({
+        files: form.files.filter((_, j) => j !== i)
+      });
+    }
+  }, "\xD7")))), /*#__PURE__*/React.createElement("button", {
+    className: "ghost",
+    style: {
+      fontSize: 11
+    },
+    onClick: () => fileRef.current.click()
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.clip,
+    s: 11,
+    c: "#4b5563"
+  }), " Adjuntar"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 10,
+      color: "#9ca3af",
+      fontStyle: "italic"
+    }
+  }, "o pega con Ctrl+V / \u2318V"), /*#__PURE__*/React.createElement("input", {
+    ref: fileRef,
+    type: "file",
+    multiple: true,
+    accept: "image/*,application/pdf",
+    style: {
+      display: "none"
+    },
+    onChange: handleFiles
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 10,
+      marginTop: 20
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "ghost",
+    style: {
+      flex: 1,
+      justifyContent: "center"
+    },
+    onClick: () => setForm(null)
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    className: "btn",
+    style: {
+      flex: 2,
+      justifyContent: "center"
+    },
+    onClick: submit,
+    disabled: !form.desc || !form.amount
+  }, form.id ? "Guardar cambios" : "Añadir registro")))), preview && /*#__PURE__*/React.createElement("div", {
+    className: "ov"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: "#fff",
+      border: "1.5px solid #d1d9e6",
+      borderRadius: 12,
+      padding: 22,
+      maxWidth: 720,
+      width: "100%",
+      maxHeight: "92vh",
+      overflow: "auto",
+      boxShadow: "0 20px 60px rgba(0,0,0,.15)"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: 16,
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      color: "#4b5563",
+      fontWeight: 500
+    }
+  }, preview.name), /*#__PURE__*/React.createElement("button", {
+    style: {
+      background: "none",
+      border: "none",
+      cursor: "pointer"
+    },
+    onClick: () => setPreview(null)
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.x,
+    s: 16,
+    c: "#6b7280"
+  }))), preview.type?.startsWith("image/") ? /*#__PURE__*/React.createElement("img", {
+    src: preview.data,
+    alt: preview.name,
+    style: {
+      width: "100%",
+      borderRadius: 8
+    }
+  }) : /*#__PURE__*/React.createElement("iframe", {
+    src: preview.data,
+    title: preview.name,
+    style: {
+      width: "100%",
+      height: 500,
+      border: "none",
+      borderRadius: 8
+    }
+  }), /*#__PURE__*/React.createElement("a", {
+    href: preview.data,
+    download: preview.name,
+    style: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 6,
+      marginTop: 14,
+      fontSize: 11,
+      color: "#0284c7",
+      textDecoration: "none",
+      fontWeight: 600
+    }
+  }, /*#__PURE__*/React.createElement(Ic, {
+    d: ICONS.dl,
+    s: 12,
+    c: "#0284c7"
+  }), " Descargar archivo"))));
+}
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+const HARDCODED_CONFIG = {
+  apiKey: "AIzaSyAGGw2IJcSM0zushSUQv-SNmOm6mkTlY_g",
+  authDomain: "ocbt-tracker.firebaseapp.com",
+  databaseURL: "https://ocbt-tracker-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ocbt-tracker",
+  storageBucket: "ocbt-tracker.firebasestorage.app",
+  messagingSenderId: "66862519015",
+  appId: "1:66862519015:web:f48844e5fe0d4997890842"
+};
+const HARDCODED_WORKSPACE = "OCBT";
+function Root() {
+  const [dbInst, setDbInst] = useState(null);
+  useEffect(() => {
+    try {
+      if (firebase.apps.length === 0) firebase.initializeApp(HARDCODED_CONFIG);
+      setDbInst(firebase.database());
+    } catch (e) {
+      console.error("Firebase init error:", e);
+    }
+  }, []);
+  if (!dbInst) return /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#eef1f6"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: "'Bebas Neue',sans-serif",
+      fontSize: 22,
+      letterSpacing: 3,
+      color: "#0284c7"
+    }
+  }, "Conectando\u2026"));
+  return /*#__PURE__*/React.createElement(TradingApp, {
+    db: dbInst,
+    workspace: HARDCODED_WORKSPACE,
+    onReset: () => {}
+  });
+}
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(Root, null));
+</script>
+</body>
+</html>
