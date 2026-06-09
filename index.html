@@ -264,11 +264,28 @@ function TradingApp({db, workspace, onReset}) {
   // ── Real-time listener ────────────────────────────────────────────────────
   useEffect(()=>{
     setSyncStatus("connecting");
+    // Load from localStorage first as fallback
+    const stored = localStorage.getItem("tradingctrl_local_backup");
+    if(stored) {
+      try {
+        const data = JSON.parse(stored);
+        if(data && Array.isArray(data)) setRows(data);
+      } catch {}
+    }
+    
+    // Try to connect to Firebase
     const unsub = dbRef.on("value", snap=>{
       const val = snap.val();
-      setRows(val ? Object.values(val) : []);
+      const data = val ? Object.values(val) : [];
+      setRows(data);
+      // Save to localStorage as backup
+      try { localStorage.setItem("tradingctrl_local_backup", JSON.stringify(data)); } catch {}
       setSyncStatus("ok");
-    }, ()=>setSyncStatus("error"));
+    }, err=>{
+      console.error("Firebase error:", err);
+      setSyncStatus("error");
+    });
+    
     return ()=>dbRef.off("value", unsub);
   },[]);
 
